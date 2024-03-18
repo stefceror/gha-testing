@@ -10,7 +10,9 @@ jobs:
     steps:
       # To use this repository's private action, you must check out the repository
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       # Basic use case example
       - name: Fast Forward PR
         id: ff-action
