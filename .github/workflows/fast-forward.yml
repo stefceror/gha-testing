@@ -1,26 +1,25 @@
+name: fast-forward
 on:
   issue_comment:
-    types: [created]
-
+    types: [created, edited]
 jobs:
-  fast_forward_job:
-    name: Fast Forward Merge
-    if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/fast-forward')
+  fast-forward:
+    # Only run if the comment contains the /fast-forward command.
+    if: ${{ contains(github.event.comment.body, '/fast-forward') && github.event.issue.pull_request }}
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+
     steps:
-      # To use this repository's private action, you must check out the repository
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Fast forwarding
+        uses: sequoia-pgp/fast-forward@v1
         with:
-          fetch-depth: 0
-      # Basic use case example
-      - name: Fast Forward PR
-        id: ff-action
-        uses: endre-spotlab/fast-forward-js-action@master
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          success_message: 'Success! Fast forwarded ***target_base*** to ***source_head***! ```git checkout target_base && git merge source_head --ff-only``` '
-          failure_message: 'Failed! Cannot do fast forward!'
-          update_status: true
-          production_branch: 'sandbox'
-          staging_branch: 'main'
+          merge: true
+          # To reduce the workflow's verbosity, use 'on-error'
+          # to only post a comment when an error occurs, or 'never' to
+          # never post a comment.  (In all cases the information is
+          # still available in the step's summary.)
+          comment: always
