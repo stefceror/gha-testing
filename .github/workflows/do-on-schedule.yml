@@ -1,7 +1,7 @@
 name: Act on set schedule
 on:
   schedule:
-    - cron: '0/10 22-23 * * 3'
+    - cron: '0 22 * * 3'
 jobs:
   Prep-Prod-Deploy:
     runs-on: ubuntu-latest
