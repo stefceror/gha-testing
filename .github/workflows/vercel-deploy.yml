@@ -1,0 +1,13 @@
+name: Vercel Staging Deployment (test)
+on:
+  push:
+    branches:
+      - main
+jobs:
+  Deploy-Staging:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trivial pass
+        run: |
+            echo "::notice This would be the vercel deploy action"
+            exit 0
