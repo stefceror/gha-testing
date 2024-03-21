@@ -1,0 +1,19 @@
+name: Act on set schedule
+on:
+  schedule:
+    - cron: '0/30 00,01 * * 5'
+jobs:
+  productionPromotion:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: production
+      - name: Update production branch
+        run: |
+          git fetch origin sandbox:sandbox
+          git reset --hard sandbox
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: production-promotion
