@@ -15,7 +15,7 @@ jobs:
           git fetch origin sandbox:sandbox
           {
             echo 'DIFF<<EOF'
-            git log --pretty='%h %s %aN' production..sandbox
+            echo git log --pretty='%h %s %aN' production..sandbox
             echo EOF
           } >> "$GITHUB_ENV"
           git reset --hard sandbox
