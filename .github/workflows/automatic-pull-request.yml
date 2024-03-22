@@ -10,8 +10,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: sandbox
-      - name: Current Date
-        run: echo "CURRENT_DATE=$(TZ=":America/Los_Angeles" date '+%Y-%m-%d %H:%MPT')" >> "$GITHUB_ENV"
+      - name: Get title data
+        run: |
+          echo "FIRST_COMMIT=$(git log sandbox..main --pretty=%h  --reverse | head -1)" >> "$GITHUB_ENV"
+          echo "LAST_COMMIT=$(git log sandbox..main --pretty=%h | head -1)" >> "$GITHUB_ENV"
       - name: Reset sandbox branch
         run: |
           git fetch origin main:main
@@ -20,5 +22,5 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           branch: sandbox-promotion
-          title: Release to Production ${{ env.CURRENT_DATE}}
+          title: Release to Sandbox ${{ env.FIRST_COMMIT}} - ${{env.LAST_COMMIT}}
           body: ${{env.DIFF}}

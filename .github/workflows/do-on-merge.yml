@@ -2,7 +2,7 @@ name: Act on merge to named branch
 on:
   push:
     branches:
-      - main
+      - production
 jobs:
   Deploy-Staging:
     runs-on: ubuntu-latest
