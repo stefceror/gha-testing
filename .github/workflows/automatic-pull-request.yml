@@ -15,12 +15,7 @@ jobs:
       - name: Reset sandbox branch
         run: |
           git fetch origin main:main
-          {
-            echo 'DIFF<<EOF'
-            echo git log --pretty='%h %s %aN' production..sandbox
-            echo EOF
-          } >> "$GITHUB_ENV"
-          git reset --hard main
+          echo "DIFF=$(git log --pretty="%h %s %aN" sandbox..main)" >> "$GITHUB_ENV"
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
