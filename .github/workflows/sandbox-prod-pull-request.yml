@@ -2,7 +2,7 @@ name: Create production promotion pull request
 on:
   push:
     branches:
-      - main
+      - sandbox
 jobs:
   productionPromotion:
     runs-on: ubuntu-latest
@@ -12,13 +12,13 @@ jobs:
           ref: production
       - name: Reset production branch
         run: |
-          git fetch origin main:main
-          git reset --hard main
+          git fetch origin sandbox:sandbox
+          echo "DIFF=$(git log --pretty='%h %s %aN' production..sandbox)" >> $GITHUB_ENV
+          git reset --hard sandbox
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
           branch: production-promotion
           commit-message: Release to Production ${{ github.event.repository.updated_at}}
           title: Release to Production ${{ github.event.repository.updated_at}}
-          body: |
-            git log --pretty='%h %s %aN' production..sandbox
+          body: ${{env.DIFF}}

@@ -13,6 +13,7 @@ jobs:
       - name: Reset sandbox branch
         run: |
           git fetch origin main:main
+          echo "DIFF=$(git log --pretty='%h %s %aN' sandbox..main)" >> $GITHUB_ENV
           git reset --hard main
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
@@ -20,5 +21,4 @@ jobs:
           branch: sandbox-promotion
           commit-message: Release to Sandbox ${{ github.event.repository.updated_at}}
           title: Release to Sandbox ${{ github.event.repository.updated_at}}
-          body: |
-            git log --pretty='%h %s %aN' sandbox..main
+          body: ${{env.DIFF}}
