@@ -13,7 +13,7 @@ jobs:
       - name: Reset production branch
         run: |
           git fetch origin sandbox:sandbox
-          echo "DIFF=$(git log --pretty='%h %s %aN' production..sandbox)" >> $GITHUB_ENV
+          echo "DIFF=$(git log --pretty='%h %s %aN' production..sandbox)" >> "$GITHUB_ENV"
           git reset --hard sandbox
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6

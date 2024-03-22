@@ -4,7 +4,7 @@ on:
     branches:
       - main
 jobs:
-  productionPromotion:
+  sandboxPromotion:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -13,7 +13,7 @@ jobs:
       - name: Reset sandbox branch
         run: |
           git fetch origin main:main
-          echo "DIFF=$(git log --pretty='%h %s %aN' sandbox..main)" >> $GITHUB_ENV
+          echo "DIFF=$(git log --pretty='%h %s %aN' sandbox..main)" >> "$GITHUB_ENV"
           git reset --hard main
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
