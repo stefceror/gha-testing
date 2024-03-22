@@ -18,3 +18,7 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           branch: sandbox-promotion
+          commit-message: Release to Sandbox ${{ github.event.repository.updated_at}}
+          title: Release to Sandbox ${{ github.event.repository.updated_at}}
+          body: |
+            git log --pretty='%h %s %aN' sandbox..main
