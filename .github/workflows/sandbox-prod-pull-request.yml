@@ -1,29 +1,11 @@
-name: Create production promotion pull request
+name: Create sandbox promotion pull request
 on:
   push:
     branches:
       - sandbox
 jobs:
-  productionPromotion:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: production
-      - name: Current Date
-        run: echo "CURRENT_DATE=$(TZ=":America/Los_Angeles" date '+%Y-%m-%d %H:%MPT')" >> "$GITHUB_ENV"
-      - name: Reset production branch
-        run: |
-          git fetch origin sandbox:sandbox
-          {
-            echo 'DIFF<<EOF'
-            $(git log --pretty='%h %s %aN' production..sandbox)
-            echo EOF
-          } >> "$GITHUB_ENV"
-          git reset --hard sandbox
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v6
-        with:
-          branch: production-promotion
-          title: Release to Production ${{ env.CURRENT_DATE}}
-          body: "${{env.DIFF}}"
+  sandboxPromotion:
+    uses: ./.github/workflows/reusable-pull-request.yml
+    with:
+      base-branch: production
+      compare-branch: sandbox
