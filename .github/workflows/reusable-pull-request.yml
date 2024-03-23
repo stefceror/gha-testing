@@ -32,5 +32,5 @@ jobs:
         uses: peter-evans/create-pull-request@v6
         with:
           branch: ${{inputs.base-branch}}-promotion
-          title: Release to ${{inputs.base-branch}} ${{ env.FIRST_COMMIT}} - ${{env.LAST_COMMIT}}
+          title: Release to ${{inputs.base-branch}} ${{ env.FIRST_COMMIT}}..${{env.LAST_COMMIT}}
           body: ${{env.DIFF}}
