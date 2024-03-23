@@ -16,7 +16,11 @@ jobs:
         run: |
           echo "FIRST_COMMIT=$(git log sandbox..main --pretty=%h  --reverse | head -1)" >> "$GITHUB_ENV"
           echo "LAST_COMMIT=$(git log sandbox..main --pretty=%h | head -1)" >> "$GITHUB_ENV"
-          echo "DIFF="$(git log --pretty="%h %s %aN" sandbox..main)"" >> "$GITHUB_ENV"
+          {
+            echo 'DIFF<<EOF'
+            git log --pretty='%h %s %aN' sandbox..main
+            echo EOF
+          } >> "$GITHUB_ENV"
       - name: Reset sandbox branch
         run: git reset --hard main
       - name: Create Pull Request
