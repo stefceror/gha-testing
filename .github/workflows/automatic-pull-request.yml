@@ -5,27 +5,7 @@ on:
       - main
 jobs:
   sandboxPromotion:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: sandbox
-      - name: Fetch main
-        run: git fetch origin main:main
-      - name: Get title data
-        run: |
-          echo "FIRST_COMMIT=$(git log sandbox..main --pretty=%h  --reverse | head -1)" >> "$GITHUB_ENV"
-          echo "LAST_COMMIT=$(git log sandbox..main --pretty=%h | head -1)" >> "$GITHUB_ENV"
-          {
-            echo 'DIFF<<EOF'
-            git log --pretty='%h %s %aN' sandbox..main
-            echo EOF
-          } >> "$GITHUB_ENV"
-      - name: Reset sandbox branch
-        run: git reset --hard main
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v6
-        with:
-          branch: sandbox-promotion
-          title: Release to Sandbox ${{ env.FIRST_COMMIT}} - ${{env.LAST_COMMIT}}
-          body: ${{env.DIFF}}
+    uses: ./.github/workflows/reusable-pull-request.yml
+    with:
+      base-branch: sandbox
+      compare-branch: main
