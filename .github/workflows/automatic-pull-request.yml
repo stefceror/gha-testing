@@ -18,7 +18,7 @@ jobs:
           echo "LAST_COMMIT=$(git log sandbox..main --pretty=%h | head -1)" >> "$GITHUB_ENV"
           echo "DIFF="$(git log --pretty="%h %s %aN" sandbox..main)"" >> "$GITHUB_ENV"
       - name: Reset sandbox branch
-        run: git reset --hard sandbox
+        run: git reset --hard main
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6
         with:
