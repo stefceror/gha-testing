@@ -30,8 +30,7 @@ jobs:
       - name: Use provided title
         if: "${{ inputs.title != '' }}"
         run: |
-          echo ${{inputs.title}}
-          echo "TITLE=${{inputs.title}}" >> "GITHUB_ENV"
+          echo "TITLE='${{inputs.title}}PM PT'" >> "GITHUB_ENV"
       - name: Get diff list
         run: |
           {

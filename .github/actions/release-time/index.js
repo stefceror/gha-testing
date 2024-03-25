@@ -12,7 +12,7 @@ try {
     timeZone: 'America/Los_Angeles',
   }).format(now))
   let deployTime = 3
-  if(nowHour > 15 || nowHour < 10 && nowMinutes < 15) {
+  if(nowHour >= 15 || nowHour < 10 && nowMinutes < 15) {
     deployTime = 10
   } else if(nowHour < 12 && nowMinutes < 15) {
     nowHour = 12
