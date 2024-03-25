@@ -22,13 +22,13 @@ jobs:
       - name: Fetch ${{inputs.compare-branch}}
         run: git fetch origin ${{inputs.compare-branch}}:${{inputs.compare-branch}}
       - name: Get title data
-        if: "${{ github.event.inputs.title == '' }}"
+        if: "${{ inputs.title == '' }}"
         run: |
           FIRST_COMMIT=$(git log ${{inputs.base-branch}}..${{inputs.compare-branch}} --pretty=%h  --reverse | head -1)
           LAST_COMMIT=$(git log ${{inputs.base-branch}}..${{inputs.compare-branch}} --pretty=%h | head -1)
           echo "TITLE=${FIRST_COMMIT}..${LAST_COMMIT}" >> "$GITHUB_ENV"
       - name: Use provided title
-        if: "${{ github.event.inputs.title != '' }}"
+        if: "${{ inputs.title != '' }}"
         run: echo "TITLE=${{inputs.title}}" >> "GITHUB_ENV"
       - name: Get diff list
         run: |
