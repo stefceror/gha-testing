@@ -1,9 +1,11 @@
 name: Create production promotion pull request
 on:
   workflow_run:
-    workflows: [fast-forward]
-    types: [completed]
-    branches: [sandbox]
+    workflows: "fast-forward"
+    types:
+      - completed
+    branches:
+      - sandbox
 jobs:
   getReleaseTime:
     runs-on: ubuntu-latest
