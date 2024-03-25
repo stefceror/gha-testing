@@ -11,11 +11,11 @@ try {
     minute: 'numeric',
     timeZone: 'America/Los_Angeles',
   }).format(now))
-  let deployTime = 3
+  let deployTime = "3 PM PT"
   if(nowHour >= 15 || nowHour < 10 && nowMinutes < 15) {
-    deployTime = 10
+    deployTime = "10 AM PT"
   } else if(nowHour < 12 && nowMinutes < 15) {
-    nowHour = 12
+    nowHour = "12 PM PT"
   }
   core.debug(deployTime)
   core.setOutput("time", deployTime);
