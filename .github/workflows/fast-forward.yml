@@ -8,15 +8,11 @@ jobs:
     if: ${{ contains(github.event.comment.body, '/fast-forward') && github.event.issue.pull_request }}
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write
-      pull-requests: write
-      issues: write
-
     steps:
       - name: Fast forwarding
         uses: sequoia-pgp/fast-forward@v1
         with:
+          github_token: ${{secrets.TESTING_PAT}}
           merge: true
           # To reduce the workflow's verbosity, use 'on-error'
           # to only post a comment when an error occurs, or 'never' to
