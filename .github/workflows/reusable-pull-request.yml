@@ -29,7 +29,9 @@ jobs:
           echo "TITLE=${FIRST_COMMIT}..${LAST_COMMIT}" >> "$GITHUB_ENV"
       - name: Use provided title
         if: "${{ inputs.title != '' }}"
-        run: echo "TITLE=${{inputs.title}}" >> "GITHUB_ENV"
+        run: |
+          echo ${{inputs.title}}
+          echo "TITLE=${{inputs.title}}" >> "GITHUB_ENV"
       - name: Get diff list
         run: |
           {
