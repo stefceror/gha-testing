@@ -17,6 +17,7 @@ try {
   } else if(nowHour < 12 && nowMinutes < 15) {
     nowHour = 12
   }
+  core.debug(deployTime)
   core.setOutput("time", deployTime);
 } catch (error) {
   core.setFailed(error.message);

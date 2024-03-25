@@ -7,7 +7,7 @@ jobs:
   getReleaseTime:
     runs-on: ubuntu-latest
     outputs:
-      title: ${{steps.title.outputs.title}}
+      title: ${{steps.title.outputs.time}}
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node.js environment
@@ -20,6 +20,8 @@ jobs:
       - name: Get deploy time
         id: title
         uses: ./.github/actions/release-time/
+      - name: Print time
+        run: echo Next deploy at ${{steps.title.outputs.time}}
   productionPullRequest:
       needs: getReleaseTime
       uses: ./.github/workflows/reusable-pull-request.yml
