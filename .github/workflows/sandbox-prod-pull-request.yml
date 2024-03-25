@@ -1,4 +1,4 @@
-name: Create sandbox promotion pull request
+name: Create production promotion pull request
 on:
   push:
     branches:
@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Get deploy time
         id: title
-        uses: ./github/actions/release-time
+        uses: ./.github/actions/release-time/
       - name: Create pull request
         uses: ./.github/workflows/reusable-pull-request.yml
         with:
