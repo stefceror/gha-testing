@@ -4,13 +4,12 @@ on:
     branches:
       - sandbox
 jobs:
-  productionPromotion:
+  getReleaseTime:
     runs-on: ubuntu-latest
+    outputs:
+      title: ${{steps.title.outputs.title}}
     steps:
       - uses: actions/checkout@v4
-        with:
-          sparse-checkout: |
-            .github
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
@@ -21,9 +20,13 @@ jobs:
       - name: Get deploy time
         id: title
         uses: ./.github/actions/release-time/
+  productionPullRequest:
+    runs-on: ubuntu-latest
+    needs: getReleaseTime
+    steps:
       - name: Create pull request
         uses: ./.github/workflows/reusable-pull-request.yml
         with:
           base-branch: production
           compare-branch: sandbox
-          title: ${{steps.title.outputs.title}}
+          title: ${{needs.getReleaseTime.outputs.title}}
