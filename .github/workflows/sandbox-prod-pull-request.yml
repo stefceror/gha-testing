@@ -1,8 +1,9 @@
 name: Create production promotion pull request
 on:
-  push:
-    branches:
-      - sandbox
+  workflow_run:
+    workflows: [fast-forward]
+    types: [completed]
+    branches: [sandbox]
 jobs:
   getReleaseTime:
     runs-on: ubuntu-latest
