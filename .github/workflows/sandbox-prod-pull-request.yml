@@ -5,7 +5,14 @@ on:
       - sandbox
 jobs:
   sandboxPromotion:
-    uses: ./.github/workflows/reusable-pull-request.yml
-    with:
-      base-branch: production
-      compare-branch: sandbox
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get deploy time
+        id: title
+        uses: ./github/actions/release-time
+      - name: Create pull request
+        uses: ./.github/workflows/reusable-pull-request.yml
+        with:
+          base-branch: production
+          compare-branch: sandbox
+          title: ${{steps.title.outputs.title}}

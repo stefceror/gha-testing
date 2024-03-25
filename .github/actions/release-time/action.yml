@@ -1,0 +1,8 @@
+name: 'Release Time'
+description: 'Generates the next release time'
+outputs:
+  time:
+    description: 'The time of the next release'
+runs:
+  using: 'node20'
+  main: 'index.js'
