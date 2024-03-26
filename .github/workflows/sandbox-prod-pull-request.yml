@@ -1,9 +1,6 @@
 name: Create production promotion pull request
 on:
-  workflow_run:
-    workflows: "fast-forward"
-    types:
-      - completed
+  push:
     branches:
       - sandbox
 jobs:
