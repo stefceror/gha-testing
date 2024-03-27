@@ -7,7 +7,7 @@ deploy_sandbox:
 
 deploy_production:
 	git switch sandbox
-	git pull
+	git pull origin sandbox
 	git switch production
 	git rebase sandbox
-	git push --set-upstream origin sandbox
+	git push --set-upstream origin production
