@@ -1,13 +1,13 @@
 deploy_sandbox:
-	git checkout main
+	git switch main
 	git pull
-	git checkout sandbox
+	git switch sandbox
 	git rebase main
 	git push
 
 deploy_production:
-  git checkout sandbox
+	git switch sandbox
 	git pull
-	git checkout production
+	git switch production
 	git rebase sandbox
 	git push
