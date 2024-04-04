@@ -5,13 +5,13 @@ on:
 jobs:
   fast-forward:
     # Only run if the comment contains the /fast-forward command.
-    if: ${{ contains(github.event.pull_request.base.label, 'sandbox') }}
+    if: ${{ contains(github.event.pull_request.base.label, 'sandbox') && github.event.review.state =='approved'}}
     runs-on: ubuntu-latest
 
     steps:
       - name: Log branch base name
         run:
-          echo ${{github.event.pull_request.base.label}} ${{github.event.review.state}}
+          echo ${{github.event.review.body}}
       - name: Fast forwarding
         uses: sequoia-pgp/fast-forward@v1
         with:
