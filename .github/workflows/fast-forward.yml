@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Log branch name
+        run:
+          echo ${{github.ref_name}}
       - name: Fast forwarding
         uses: sequoia-pgp/fast-forward@v1
         with:
