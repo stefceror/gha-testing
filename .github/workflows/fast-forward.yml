@@ -5,7 +5,7 @@ on:
 jobs:
   fast-forward:
     # Only run if the comment contains the /fast-forward command.
-    if: ${{ contains(github.event.review.body, '/fast-forward') }}
+    if: ${{ contains(github.event.pull_request.base.label, 'sandbox') }}
     runs-on: ubuntu-latest
 
     steps:
