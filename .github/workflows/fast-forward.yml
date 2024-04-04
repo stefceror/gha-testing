@@ -1,17 +1,17 @@
 name: fast-forward
 on:
-  pull_request_review_comment:
-    types: [created, edited]
+  pull_request_review:
+    types: [submitted]
 jobs:
   fast-forward:
     # Only run if the comment contains the /fast-forward command.
-    if: ${{ contains(github.event.comment.body, '/fast-forward') }}
+    if: ${{ contains(github.event.review.body, '/fast-forward') }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Log branch base name
         run:
-          echo ${{github.event.pull_request.base.label}}
+          echo ${{github.event.pull_request.base.label}} ${{github.event.review.state}}
       - name: Fast forwarding
         uses: sequoia-pgp/fast-forward@v1
         with:
