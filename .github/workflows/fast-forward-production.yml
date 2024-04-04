@@ -1,0 +1,34 @@
+name: fast-forward
+on:
+  pull_request_review:
+    types: [submitted]
+jobs:
+  fast-forward:
+    if: ${{ contains(github.event.pull_request.base.label, 'production') && github.event.review.state =='approved' && contains(github.event.review.body, '/fast-forward')}}
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: auth_check
+        uses: morfien101/actions-authorized-user@v3
+        with:
+          username: ${{ github.actor }}
+          org: "stefceror"
+          team: "release_team"
+          whitelist: "stefceror"
+          github_token: ${{ secrets.TESTING_PAT }}
+      - name: Exit if unauthorized
+        run: |
+          if [ ${{ steps.auth_check.outputs.authorized }} != "true" ]; then
+            echo "::error title=User Unauthorized::User ${{ github.actor }} is not authorized to run this workflow!"
+            exit 1
+          fi
+      - name: Fast forwarding
+        uses: sequoia-pgp/fast-forward@v1
+        with:
+          github_token: ${{secrets.TESTING_PAT}}
+          merge: true
+          # To reduce the workflow's verbosity, use 'on-error'
+          # to only post a comment when an error occurs, or 'never' to
+          # never post a comment.  (In all cases the information is
+          # still available in the step's summary.)
+          comment: always
